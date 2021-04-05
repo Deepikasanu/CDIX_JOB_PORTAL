@@ -1,0 +1,180 @@
+<?php
+
+//To Handle Session Variables on This Page
+session_start();
+
+
+//Including Database Connection From db.php file to avoid rewriting in all files
+require_once("db.php");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Dekko Web Development</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="css/AdminLTE.min.css">
+  <link rel="stylesheet" href="css/_all-skins.min.css">
+  <!-- Custom -->
+  <link rel="stylesheet" href="css/custom.css">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition skin-green sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="index.php" class="logo logo-bg">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>J</b>P</span>
+     
+    </a>
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+           <li>
+            <a href="company/index.php">Dashboard</a>
+          </li>
+                  
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+
+
+  <div class="content-wrapper" style="margin-left: 0px;">
+
+  <?php
+  
+    $sql = "SELECT * FROM users WHERE id_user='$_GET[id]'";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0) 
+    {
+      while($row = $result->fetch_assoc()) 
+      {
+  ?>
+
+    <section id="candidates" class="content-header">
+      <div class="container">
+        <div class="row">          
+          <div class="col-md-9 bg-white padding-2">
+            <div class="pull-left">
+              <h2><b><i><?php echo $row['firstname']; ?></i></b></h2>
+            </div>
+            <div class="pull-right">
+              <a href="candidate.php" class="btn btn-default btn-lg btn-flat margin-top-20"><i class="fa fa-arrow-circle-left"></i> Back</a>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+            <div>
+              <p><span class="margin-right-10"><i class=""></i> <?php echo $row['email']; ?> <br> <br>    <span class="margin-right-10"><i class=""></i> <?php echo $row['contactno']; ?>  <br> <br>  <span class="margin-right-10"><i class=""></i> <?php echo $row['skills']; ?>           </p>              
+            </div>
+            <div>
+              <?php echo stripcslashes($row['description']); ?>
+              
+               <?php
+              
+                   
+                    if($row['resume'] != "") {
+                      echo '<a href="../uploads/resume/'.$row['resume'].'" class="btn btn-info" download="resume.pdf">Download Resume</a>';
+                    }
+                   
+                  ?>
+              
+              
+            </div>
+            
+            
+            
+           <!--  
+            <?php 
+            if(isset($_SESSION["id_user"]) && empty($_SESSION['companyLogged'])) { ?>
+            <div>
+              <a href="apply.php?id=<?php echo $row['id_jobpost']; ?>" class="btn btn-success btn-flat margin-top-50">Apply</a>
+            </div>
+
+            <?php } ?> -->
+            
+            
+          </div>
+       
+              
+               <?php 
+                if(isset($_SESSION["id_user"]) && empty($_SESSION['companyLogged'])) { ?>
+              <div class="caption text-center">
+            <div>
+                <h3><?php echo $row['firstname']; ?></h3>
+                </div>
+            <?php } ?>
+            
+              
+                <hr>
+                <div class="row">
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <?php 
+      }
+    }
+    ?>
+
+    
+
+  </div>
+  <!-- /.content-wrapper -->
+
+   <footer class="main-footer" style="margin-left: 0px;">
+    <div class="text-center">
+      <strong>Design and Developed by <a href="https://dekkoweb.site/">Dekko Web Development</a>.</strong>
+
+    </div>
+  </footer>
+
+  <!-- /.control-sidebar -->
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="js/adminlte.min.js"></script>
+
+
+
+</body>
+</html>
