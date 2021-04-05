@@ -1,6 +1,6 @@
 # CDIX_JOB_PORTAL
 
-This is Job portal project wherein the candidates can apply fro jobs and company can post for jobs
+This is Job portal project wherein the candidates can apply fOR jobs and company can post for jobs
 
 STYLES
 -CSS
